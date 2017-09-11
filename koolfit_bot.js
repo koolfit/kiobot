@@ -89,7 +89,7 @@ controller.hears(['insult (.*)'], 'direct_message,direct_mention,mention', funct
 
 var fenixPrivateIP="10.62.98.20";
 var fenixPublicIP="201.175.27.20";
-var fenixIP=fenixPublicIP;
+var fenixIP=fenixPrivateIP;
 
 controller.hears(['fenix ceph'], 'direct_message,direct_mention', custom_hear_middleware, function(bot, message) {
     const exec = require('child_process').exec;
@@ -249,7 +249,7 @@ controller.hears('fenix infracapacity', 'direct_message,direct_mention,mention',
 
 /* Protocolo de incidencias Jordan */
 
-controller.hears('jordan graficas', 'direct_message,direct_mention,mention', function(bot, message) {
+controller.hears('jordan graficas', 'jordan gráficas', 'direct_message,direct_mention,mention', function(bot, message) {
     bot.reply(message, 'Generando gráficas ... espera');
     const exec = require('child_process').exec;
     //var command = "ssh kftadmin@10.52.30.10 -p65535 \"/usr/local/bin/generate_zabbix_graphs_day.sh\" 2>/dev/null";
@@ -271,19 +271,19 @@ controller.hears('help', 'direct_message,direct_mention,mention', function(bot, 
     bot.api.users.info({user: message.user}, (error, response) => {
         let {name, real_name} = response.user;
 		var help = 'Hola @'+name+' , estos son los comandos que puedo recibir:\n';
-        help += '*Actualmente sólo estoy trabajando con la infra de Tribunal (fenix)*\n\n\n';
+        help += 'Actualmente sólo estoy trabajando con la infraestructura de *Tribunal Superior de Justicia* (fenix)\n\n\n';
         help += '*Ya puedo generar las gráficas del protocolo de incidencias de GOB.MX!*\n\n\n';
-    	help += '*Obtener URL de novnc*: `<infra> novnc <nombre instancia>`\n';
+    	help += '*Obtener URL de novnc*: `<infraestructura> novnc <nombre instancia>`\n';
     	help += 'ejemplo: `fenix novnc TEST_KPP`\n\n\n';
-        help += '*Obtener el estatus de Ceph*: `<infra> ceph`\n';
-    	help += 'Para Tribunal también hay un `fenix cephkpp`\n\n\n';
-        help += '*Obtener el nombre de la instancia a partir de la IP*: `<infra> get name <IP>`\n';
+        help += '*Obtener el estatus de Ceph*: `<infraestructura> ceph`\n';
+    	help += 'Para Tribunal también hay un `fenix cephkpp` (Cluster 2 de Ceph)\n\n\n';
+        help += '*Obtener el nombre de la instancia a partir de la IP*: `<infraestructura> get name <IP>`\n';
         help += 'ejemplo: `fenix get name 10.10.21.36`\n\n\n';
-        help += '*nova service-list*: `<infra> nova service-list`\n\n\n';
-        help += '*Obtener el ID de la instancia a partir de la IP*: `<infra> get id <IP>`\n';
+        help += '*nova service-list*: `<infraestructura> nova service-list`\n\n\n';
+        help += '*Obtener el ID de la instancia a partir de la IP*: `<infraestructura> get id <IP>`\n';
         help += 'ejemplo: `fenix get id 10.10.21.36`\n\n\n';
-        help += '*Obtener gráficas del protocolo de incidencias:* `jordan graficas`\n\n\n';
-        help += '*Generar reporte de capacidad de infraestructura:* `<infra> infracapacity`\n\n\n';
+        help += '*Obtener gráficas del protocolo de incidencias:* `jordan gráficas`\n\n\n';
+        help += '*Generar reporte de capacidad de infraestructura:* `<infraestructura> infracapacity`\n\n\n';
 		bot.reply(message, help);
 	})
 });
@@ -298,6 +298,7 @@ controller.hears(['Hola','hola'], 'ambient', function(bot, message) {
     bot.reply(message, randMessage);
 });
 
+/*
 controller.hears(['Ceph','ceph', 'chep', 'Chep'], 'ambient', function(bot, message) {
     var ceph_messages = ['está degradado?', 
                          'por qué siguen usando Ceph?', 
@@ -309,6 +310,7 @@ controller.hears(['Ceph','ceph', 'chep', 'Chep'], 'ambient', function(bot, messa
     bot.reply(message, randMessage);
 });
 
+
 controller.hears(['Max','max', 'Maximiliano'], 'ambient', function(bot, message) {
     var ceph_messages = ['Yo no soy Max', 
                          'Dejen de decir que yo soy Max', 
@@ -317,6 +319,7 @@ controller.hears(['Max','max', 'Maximiliano'], 'ambient', function(bot, message)
     var randMessage = ceph_messages[Math.floor(Math.random() * ceph_messages.length)];
     bot.reply(message, randMessage);
 });
+*/
 
 controller.hears(['hay alguien?', ':rodadora:'], 'ambient', function(bot, message) {
     bot.reply(message,{
