@@ -323,7 +323,7 @@ controller.hears(['Max','max', 'Maximiliano'], 'ambient', function(bot, message)
 
 controller.hears(['hay alguien?', ':rodadora:'], 'ambient', function(bot, message) {
     bot.reply(message,{
-      username: "koolfitbot",
+      username: "kiobot",
       text: " ",
       icon_emoji: ":rodadora:",
    });
