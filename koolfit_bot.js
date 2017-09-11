@@ -89,7 +89,7 @@ controller.hears(['insult (.*)'], 'direct_message,direct_mention,mention', funct
 
 var fenixPrivateIP="10.62.98.20";
 var fenixPublicIP="201.175.27.20";
-var fenixIP=fenixPrivateIP;
+var fenixIP=fenixPublicIP;
 
 controller.hears(['fenix ceph'], 'direct_message,direct_mention', custom_hear_middleware, function(bot, message) {
     const exec = require('child_process').exec;
