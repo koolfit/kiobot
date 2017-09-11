@@ -249,7 +249,7 @@ controller.hears('fenix infracapacity', 'direct_message,direct_mention,mention',
 
 /* Protocolo de incidencias Jordan */
 
-controller.hears('jordan graficas', 'jordan gráficas', 'direct_message,direct_mention,mention', function(bot, message) {
+controller.hears(['jordan graficas', 'jordan gráficas'], 'direct_message,direct_mention,mention', function(bot, message) {
     bot.reply(message, 'Generando gráficas ... espera');
     const exec = require('child_process').exec;
     //var command = "ssh kftadmin@10.52.30.10 -p65535 \"/usr/local/bin/generate_zabbix_graphs_day.sh\" 2>/dev/null";
