@@ -284,7 +284,7 @@ controller.hears(['help', 'ayuda'], 'direct_message,direct_mention,mention', fun
         help += 'ejemplo: `fenix get id 10.10.21.36`\n\n\n';
         help += '*Obtener gráficas del protocolo de incidencias:* `jordan gráficas`\n\n\n';
         help += '*Generar reporte de capacidad de infraestructura:* `<infraestructura> infracapacity`\n\n\n';
-        help += '*Para listar las infraestructuras disponibles: `infraestructuras`\n\n\n';
+        help += '*Para listar las infraestructuras disponibles: *`infraestructuras`\n\n\n';
     bot.reply(message, help);
 	})
 });
