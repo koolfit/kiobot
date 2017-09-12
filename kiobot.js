@@ -276,7 +276,7 @@ controller.hears(['help', 'ayuda'], 'direct_message,direct_mention,mention', fun
     	help += '*Obtener URL de novnc*: `<infraestructura> novnc <nombre instancia>`\n';
     	help += 'ejemplo: `fenix novnc TEST_KPP`\n\n\n';
         help += '*Obtener el estatus de Ceph*: `<infraestructura> ceph`\n';
-    	help += 'Para Tribunal también hay un `fenix cephkpp` (Cluster 2 de Ceph)\n\n\n';
+    	help += 'Para Tribunal también hay un `fenix cephkpp` _(Cluster 2 de Ceph)_\n\n\n';
         help += '*Obtener el nombre de la instancia a partir de la IP*: `<infraestructura> get name <IP>`\n';
         help += 'ejemplo: `fenix get name 10.10.21.36`\n\n\n';
         help += '*nova service-list*: `<infraestructura> nova service-list`\n\n\n';
@@ -286,6 +286,30 @@ controller.hears(['help', 'ayuda'], 'direct_message,direct_mention,mention', fun
         help += '*Generar reporte de capacidad de infraestructura:* `<infraestructura> infracapacity`\n\n\n';
 		bot.reply(message, help);
 	})
+});
+
+/***********  HELP Koolfit ***********/
+controller.hears(['Koolfit', 'koolfit'], 'direct_message,direct_mention,mention', function(bot, message) {
+    bot.api.users.info({user: message.user}, (error, response) => {
+        let {name, real_name} = response.user;
+    var help = 'Hola @'+name+' , \n'
+        help += 'Servicio: *Koolfit*\n';
+        help += 'Estos son los comandos que puedo recibir:\n';
+        help += 'Actualmente sólo estoy trabajando con la infraestructura de *TSJCDMX* (fenix)\n\n\n';
+        help += '*Ya puedo generar las gráficas del Protocolo de Incidencias de GOB.MX!*\n\n\n';
+      help += '*Obtener URL de novnc*: `<infraestructura> novnc <nombre instancia>`\n';
+      help += 'ejemplo: `fenix novnc TEST_KPP`\n\n\n';
+        help += '*Obtener el estatus de Ceph*: `<infraestructura> ceph`\n';
+      help += 'Para Tribunal también hay un `fenix cephkpp` _(Cluster 2 de Ceph)_\n\n\n';
+        help += '*Obtener el nombre de la instancia a partir de la IP*: `<infraestructura> get name <IP>`\n';
+        help += 'ejemplo: `fenix get name 10.10.21.36`\n\n\n';
+        help += '*nova service-list*: `<infraestructura> nova service-list`\n\n\n';
+        help += '*Obtener el ID de la instancia a partir de la IP*: `<infraestructura> get id <IP>`\n';
+        help += 'ejemplo: `fenix get id 10.10.21.36`\n\n\n';
+        help += '*Obtener gráficas del protocolo de incidencias:* `jordan gráficas`\n\n\n';
+        help += '*Generar reporte de capacidad de infraestructura:* `<infraestructura> infracapacity`\n\n\n';
+    bot.reply(message, help);
+  })
 });
 
 controller.hears(['Hola','hola'], 'ambient', function(bot, message) {
