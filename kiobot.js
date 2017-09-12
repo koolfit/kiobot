@@ -290,6 +290,7 @@ controller.hears(['help', 'ayuda'], 'direct_message,direct_mention,mention', fun
 });
 
 /***********  HELP Koolfit ***********/
+/*
 controller.hears(['Koolfit', 'koolfit'], 'direct_message,direct_mention,mention', function(bot, message) {
     bot.api.users.info({user: message.user}, (error, response) => {
         let {name, real_name} = response.user;
@@ -312,6 +313,7 @@ controller.hears(['Koolfit', 'koolfit'], 'direct_message,direct_mention,mention'
     bot.reply(message, help);
   })
 });
+/*
 
 /***********  Infraestructuras ***********/
 controller.hears(['infraestructura', 'infraestructuras', 'Infraestructura', 'Infraestructuras'], 'direct_message,direct_mention,mention', function(bot, message) {
