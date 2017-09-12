@@ -270,7 +270,7 @@ controller.hears(['jordan graficas', 'jordan gráficas'], 'direct_message,direct
 controller.hears(['help', 'ayuda'], 'direct_message,direct_mention,mention', function(bot, message) {
     bot.api.users.info({user: message.user}, (error, response) => {
         let {name, real_name} = response.user;
-		var help = 'Hola @'+name+' , estos son los comandos que puedo recibir:\n';
+		var help = 'Hola @'+name+', estos son los comandos que puedo recibir:\n\n';
         help += 'Actualmente sólo estoy trabajando con la infraestructura de *TSJCDMX* (fenix)\n\n\n';
         help += '*Ya puedo generar las gráficas del Protocolo de Incidencias de GOB.MX!*\n\n\n';
     	help += '*Obtener URL de novnc*: `<infraestructura> novnc <nombre instancia>`\n';
@@ -284,7 +284,8 @@ controller.hears(['help', 'ayuda'], 'direct_message,direct_mention,mention', fun
         help += 'ejemplo: `fenix get id 10.10.21.36`\n\n\n';
         help += '*Obtener gráficas del protocolo de incidencias:* `jordan gráficas`\n\n\n';
         help += '*Generar reporte de capacidad de infraestructura:* `<infraestructura> infracapacity`\n\n\n';
-		bot.reply(message, help);
+        help += '*Para listar las infraestructuras disponibles: `infraestructuras`\n\n\n';
+    bot.reply(message, help);
 	})
 });
 
@@ -292,9 +293,9 @@ controller.hears(['help', 'ayuda'], 'direct_message,direct_mention,mention', fun
 controller.hears(['Koolfit', 'koolfit'], 'direct_message,direct_mention,mention', function(bot, message) {
     bot.api.users.info({user: message.user}, (error, response) => {
         let {name, real_name} = response.user;
-    var help = 'Hola @'+name+' , \n'
+    var help = 'Hola @'+name+', \n'
         help += 'Servicio: *Koolfit*\n';
-        help += 'Estos son los comandos que puedo recibir:\n';
+        help += 'Estos son los comandos que puedo recibir:\n\n';
         help += 'Actualmente sólo estoy trabajando con la infraestructura de *TSJCDMX* (fenix)\n\n\n';
         help += '*Ya puedo generar las gráficas del Protocolo de Incidencias de GOB.MX!*\n\n\n';
       help += '*Obtener URL de novnc*: `<infraestructura> novnc <nombre instancia>`\n';
@@ -308,6 +309,24 @@ controller.hears(['Koolfit', 'koolfit'], 'direct_message,direct_mention,mention'
         help += 'ejemplo: `fenix get id 10.10.21.36`\n\n\n';
         help += '*Obtener gráficas del protocolo de incidencias:* `jordan gráficas`\n\n\n';
         help += '*Generar reporte de capacidad de infraestructura:* `<infraestructura> infracapacity`\n\n\n';
+    bot.reply(message, help);
+  })
+});
+
+/***********  Infraestructuras ***********/
+controller.hears(['infraestructura', 'infraestructuras', 'Infraestructura', 'Infraestructuras'], 'direct_message,direct_mention,mention', function(bot, message) {
+    bot.api.users.info({user: message.user}, (error, response) => {
+        let {name, real_name} = response.user;
+    var help = 'Infraestructuras disponibles: \n'
+        help += '`fenix` = *TSJCDMX*\n';
+        help += '`jordan` = *GobMX*\n';
+        help += '`bessel` = *SFE Multitenant*\n';
+        help += '`andromeda` = *IMSS*\n';
+        help += '`gemma` = *ENEL*\n';
+        help += '`earth` = *SportsWorld*\n';
+        help += '`izar` = *Excelsior*\n';
+        help += '`draco` = *Soriana*\n';
+        
     bot.reply(message, help);
   })
 });
