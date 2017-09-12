@@ -271,8 +271,8 @@ controller.hears(['help', 'ayuda'], 'direct_message,direct_mention,mention', fun
     bot.api.users.info({user: message.user}, (error, response) => {
         let {name, real_name} = response.user;
 		var help = 'Hola @'+name+' , estos son los comandos que puedo recibir:\n';
-        help += 'Actualmente sólo estoy trabajando con la infraestructura de *Tribunal Superior de Justicia* (fenix)\n\n\n';
-        help += '*Ya puedo generar las gráficas del protocolo de incidencias de GOB.MX!*\n\n\n';
+        help += 'Actualmente sólo estoy trabajando con la infraestructura de *TSJCDMX* (fenix)\n\n\n';
+        help += '*Ya puedo generar las gráficas del Protocolo de Incidencias de GOB.MX!*\n\n\n';
     	help += '*Obtener URL de novnc*: `<infraestructura> novnc <nombre instancia>`\n';
     	help += 'ejemplo: `fenix novnc TEST_KPP`\n\n\n';
         help += '*Obtener el estatus de Ceph*: `<infraestructura> ceph`\n';
