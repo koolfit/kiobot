@@ -343,28 +343,6 @@ controller.hears(['Hola','hola'], 'ambient', function(bot, message) {
     bot.reply(message, randMessage);
 });
 
-/*
-controller.hears(['Ceph','ceph', 'chep', 'Chep'], 'ambient', function(bot, message) {
-    var ceph_messages = ['está degradado?', 
-                         'por qué siguen usando Ceph?', 
-                         'si quieren nos cooperamos para un storage como el de Azure', 
-                         'ay no',
-                         'está rebalanceando?',
-                         'te puedo ayudar a obtener información, tengo comandos'];
-    var randMessage = ceph_messages[Math.floor(Math.random() * ceph_messages.length)];
-    bot.reply(message, randMessage);
-});
-
-
-controller.hears(['Max','max', 'Maximiliano'], 'ambient', function(bot, message) {
-    var ceph_messages = ['Yo no soy Max', 
-                         'Dejen de decir que yo soy Max', 
-                         'Yo le ayudaba a Max, no él a mi', 
-                         'Yo soy un bot, no un Max'];
-    var randMessage = ceph_messages[Math.floor(Math.random() * ceph_messages.length)];
-    bot.reply(message, randMessage);
-});
-*/
 
 controller.hears(['hay alguien?', ':rodadora:'], 'ambient', function(bot, message) {
     bot.reply(message,{

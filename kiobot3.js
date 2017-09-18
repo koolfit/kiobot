@@ -234,6 +234,16 @@ controller.hears(['infraestructura', 'infraestructuras', 'Infraestructura', 'Inf
   })
 });
 
+/***********  image test ***********/
+controller.hears(['hi', 'hello'], 'direct_message,direct_mention,mention', function(bot, message) {
+    bot.api.users.info({user: message.user}, (error, response) => {
+        let {name, real_name} = response.user;
+    var help = 'Hi @'+name+', \n'
+    	help += '{\n    		"attachments": [\n        		{\n         		   "fallback": "Network traffic (kb/s): How does this look? @slack-ops - Sent by Julie Dodd - https://datadog.com/path/to/event",\n        		    "title": "Network traffic (kb/s)",\n        		    "title_link": "https://datadog.com/path/to/event",\n        		    "text": "How does this look? @slack-ops - Sent by Julie Dodd",\n        		    "image_url": "https://datadoghq.com/snapshot/path/to/snapshot.png",\n        		    "color": "#764FA5"\n        		}\n    		]\n		}';
+    bot.reply(message, help);
+  })
+});
+
 /***********  Saludos ***********/
 controller.hears(['Hola','hola'], 'ambient', function(bot, message) {
     var hi_messages = ['hola',
