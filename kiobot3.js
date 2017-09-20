@@ -114,7 +114,10 @@ controller.hears('fenix nova service-list', 'direct_message,direct_mention,menti
 controller.hears('(.*) capacity', 'direct_message,direct_mention,mention', function(bot, message) {
 	var infra = message.match[1];
 	//bot.reply(message, message.match[1]);
-	if (infra == "bessel" || infra == "fenix" || infra == "enel" || infra == "jordan" || infra == "earth"  || infra == "andromeda" || infra == "izar" || infra == "draco") {
+	if (infra == "bessel" || infra == "fenix" || 
+		infra == "enel" || infra == "jordan" || 
+		infra == "earth"  || infra == "andromeda" || 
+		infra == "izar" || infra == "draco") {
 	    bot.reply(message, '`'+infra+'` - Generando correo con información ... espera');
 	    const exec = require('child_process').exec;
 	    var command = 'ssh kftadmin@'+infra+' -p65535 "sudo -i bash -ic /root/infrastructureCapacity.sh 2>/dev/null"';
@@ -180,7 +183,7 @@ controller.hears(['help', 'ayuda'], 'direct_message,direct_mention,mention', fun
     bot.api.users.info({user: message.user}, (error, response) => {
         let {name, real_name} = response.user;
 		var help = 'Hola @'+name+', estos son los comandos que puedo recibir:\n\n';
-        help += 'Actualmente sólo estoy trabajando con la infraestructura de *TSJCDMX* (fenix)\n\n\n';
+        //help += 'Actualmente sólo estoy trabajando con la infraestructura de *TSJCDMX* (fenix)\n\n\n';
         help += '*Ya puedo generar las gráficas del Protocolo de Incidencias de GOB.MX!*\n\n\n';
     	help += '*Obtener URL de novnc*: `<infraestructura> novnc <nombre instancia>`\n';
     	help += 'ejemplo: `fenix novnc TEST_KPP`\n\n\n';
@@ -192,7 +195,7 @@ controller.hears(['help', 'ayuda'], 'direct_message,direct_mention,mention', fun
         help += '*Obtener el ID de la instancia a partir de la IP*: `<infraestructura> get id <IP>`\n';
         help += 'ejemplo: `fenix get id 10.10.21.36`\n\n\n';
         help += '*Obtener gráficas del protocolo de incidencias:* `jordan gráficas`\n\n\n';
-        help += '*Generar reporte de capacidad de infraestructura:* `<infraestructura> infracapacity`\n\n\n';
+        help += '*Generar reporte de capacidad de infraestructura:* `<infraestructura> capacity`\n\n\n';
         help += '*Para listar las infraestructuras disponibles: *`infraestructuras`\n\n\n';
     bot.reply(message, help);
 	})
@@ -226,7 +229,7 @@ controller.hears(['Koolfit', 'koolfit'], 'direct_message,direct_mention,mention'
 controller.hears(['infraestructura', 'infraestructuras', 'Infraestructura', 'Infraestructuras'], 'direct_message,direct_mention,mention', function(bot, message) {
     bot.api.users.info({user: message.user}, (error, response) => {
         let {name, real_name} = response.user;
-    var help = 'Infraestructuras disponibles: \n'
+    var help = '*Infraestructuras disponibles:* \n\n'
         help += '`fenix` = *TSJCDMX*\n';
         help += '`jordan` = *GobMX*\n';
         help += '`bessel` = *SFE Multitenant*\n';
