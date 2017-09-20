@@ -182,9 +182,7 @@ controller.hears(['jordan graficas', 'jordan gráficas'], 'direct_message,direct
 controller.hears(['help', 'ayuda'], 'direct_message,direct_mention,mention', function(bot, message) {
     bot.api.users.info({user: message.user}, (error, response) => {
         let {name, real_name} = response.user;
-        var help = '*Koolfit*\n';
 		help += 'Hola @'+name+', estos son los comandos que puedo recibir:\n\n';
-        //help += 'Actualmente sólo estoy trabajando con la infraestructura de *TSJCDMX* (fenix)\n\n\n';
         help += '*Ya puedo generar las gráficas del Protocolo de Incidencias de GOB.MX!*\n\n\n';
     	help += '*Obtener URL de novnc*: `<infraestructura> novnc <nombre instancia>`\n';
     	help += 'ejemplo: `fenix novnc TEST_KPP`\n\n\n';
@@ -244,4 +242,39 @@ controller.hears('date', 'direct_message,direct_mention,mention', function(bot, 
         //console.log(name, real_name);
         bot.reply(message, "@"+name+" the date is "+date);
     })
+});
+
+
+/*********** WINDOWS TEST ***********/
+
+
+//HOST="10.49.5.233"
+//CMD="systeminfo"
+
+//psexec.py "$USER":"$PASS"@$HOST "$CMD" |grep -v "[*]"|egrep "Host Name|OS Name|System Boot Time"
+
+controller.hears(['windows-1 (.*)', 'windows-2 (.*)'], 'direct_message,direct_mention,mention', function(bot, message) {
+	var windows = message.match[1];
+	if (windows == "windows-1" || windows == "windows-2") {
+		var USER = "Administrator";
+		var PASS = "A1q2w3e$";
+		var IP = "10.49.5.233";
+		bot.reply(message, 'Ejecutando comando... espera');
+	    const exec = require('child_process').exec;
+	    var command = "psexec.py "+USER+":"+PASS+"@"+IP+" "+message.match[2]+" |grep -v "[*]" 2>/dev/null";
+	    //var command = "ssh kftadmin@10.52.30.11 -p65535 \"/usr/local/bin/generate_zabbix_graphs_day.sh\" 2>/dev/null";
+	     const child = exec(command,
+	                  (error, stdout, stderr) => {
+	                      var output = stdout;
+	                      if (output) {
+	                          bot.reply(message, '```'+output+'```');
+	                      } else {
+	                          bot.reply(message, 'No pude obtener respuesta');
+	                      }
+	                      console.log('stderr: ${stderr}');
+	                  });
+	} else }
+		bot.reply(message, 'Selección inválida');
+	}
+
 });
