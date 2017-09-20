@@ -114,17 +114,17 @@ controller.hears('fenix nova service-list', 'direct_message,direct_mention,menti
 controller.hears('(.*) capacity', 'direct_message,direct_mention,mention', function(bot, message) {
 	var infra = message.match[1];
 	//bot.reply(message, message.match[1]);
-	if (infra == "bessel") {
-	    bot.reply(message, 'Generando correo con información ... espera');
+	if (infra == "bessel" || infra == "fenix" || infra == "enel" || infra == "jordan" || infra == "earth"  || infra == "andromeda" || infra == "izar" || infra == "draco") {
+	    bot.reply(message, '`'+infra+'` - Generando correo con información ... espera');
 	    const exec = require('child_process').exec;
 	    var command = 'ssh kftadmin@'+infra+' -p65535 "sudo -i bash -ic /root/infrastructureCapacity.sh 2>/dev/null"';
 	    const child = exec(command,
 	                  (error, stdout, stderr) => {
 	                      var output = stdout;
 	                      if (output) {
-	                          bot.reply(message, 'Correo enviado.');
+	                          bot.reply(message, '`'+infra+'` - Correo enviado.');
 	                      } else {
-	                          bot.reply(message, 'No pude obtener respuesta');
+	                          bot.reply(message, 'No pude obtener respuesta de: `'+infra+'`');
 	                      }
 	                      console.log('stderr: ${stderr}');
 	                  });
