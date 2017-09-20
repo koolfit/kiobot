@@ -1,3 +1,4 @@
+//KIOBOT
 // Conexion a la libreria de botkit.js
 var Botkit = require('/home/ubuntu/node_modules/botkit/lib/Botkit.js');
 
@@ -110,20 +111,26 @@ controller.hears('fenix nova service-list', 'direct_message,direct_mention,menti
 
 /************    Infrastructure Capacity  Fenix ************/
 
-controller.hears('fenix infracapacity', 'direct_message,direct_mention,mention', function(bot, message) {
-    bot.reply(message, 'Generando correo con información ... espera');
-    const exec = require('child_process').exec;
-    var command = 'ssh kftadmin@'+fenixIP+' -p65535 "sudo -i bash -ic /root/infrastructureCapacity.sh 2>/dev/null"';
-    const child = exec(command,
-                  (error, stdout, stderr) => {
-                      var output = stdout;
-                      if (output) {
-                          bot.reply(message, 'Correo enviado.');
-                      } else {
-                          bot.reply(message, 'No pude obtener respuesta');
-                      }
-                      console.log('stderr: ${stderr}');
-                  });
+controller.hears('([^\s]+) capacity', 'direct_message,direct_mention,mention', function(bot, message) {
+	var infra = message.match[1];
+	//bot.reply(message, message.match[1]);
+	if (infra == 'bessel') {
+	    bot.reply(message, 'Generando correo con información ... espera');
+	    const exec = require('child_process').exec;
+	    var command = 'ssh kftadmin@'+infra+' -p65535 "sudo -i bash -ic /root/infrastructureCapacity.sh 2>/dev/null"';
+	    const child = exec(command,
+	                  (error, stdout, stderr) => {
+	                      var output = stdout;
+	                      if (output) {
+	                          bot.reply(message, 'Correo enviado.');
+	                      } else {
+	                          bot.reply(message, 'No pude obtener respuesta');
+	                      }
+	                      console.log('stderr: ${stderr}');
+	                  });
+	} else { 
+		bot.reply(message, 'Infraestructura inválida');
+	}
 });
 
 /************    Terminan instrucciones para infra de Tribunal ************/
@@ -153,8 +160,7 @@ controller.hears(['jordan graficas', 'jordan gráficas'], 'direct_message,direct
     bot.reply(message, 'Generando gráficas ... espera');
     const exec = require('child_process').exec;
     var command = "ssh kftadmin@10.52.30.11 -p65535 \"/usr/local/bin/generate_zabbix_graphs_day.sh\" 2>/dev/null";
-    //var command = "ssh kftadmin@201.175.22.16 -p65535 \"/usr/local/bin/wrapper_jordan_graphs.sh\" 2>/dev/null";
-    const child = exec(command,
+     const child = exec(command,
                   (error, stdout, stderr) => {
                       var output = stdout;
                       if (output) {
@@ -234,15 +240,6 @@ controller.hears(['infraestructura', 'infraestructuras', 'Infraestructura', 'Inf
   })
 });
 
-/***********  image test ***********/
-controller.hears(['hi', 'hello'], 'direct_message,direct_mention,mention', function(bot, message) {
-    bot.api.users.info({user: message.user}, (error, response) => {
-        let {name, real_name} = response.user;
-    var help = 'Hi @'+name+', \n'
-    	help += '{\n    		"attachments": [\n        		{\n         		   "fallback": "Network traffic (kb/s): How does this look? @slack-ops - Sent by Julie Dodd - https://datadog.com/path/to/event",\n        		    "title": "Network traffic (kb/s)",\n        		    "title_link": "https://datadog.com/path/to/event",\n        		    "text": "How does this look? @slack-ops - Sent by Julie Dodd",\n        		    "image_url": "https://datadoghq.com/snapshot/path/to/snapshot.png",\n        		    "color": "#764FA5"\n        		}\n    		]\n		}';
-    bot.reply(message, help);
-  })
-});
 
 /***********  Saludos ***********/
 controller.hears(['Hola','hola'], 'ambient', function(bot, message) {
