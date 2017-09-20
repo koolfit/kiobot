@@ -253,9 +253,9 @@ controller.hears('date', 'direct_message,direct_mention,mention', function(bot, 
 
 //psexec.py "$USER":"$PASS"@$HOST "$CMD" |grep -v "[*]"|egrep "Host Name|OS Name|System Boot Time"
 
-controller.hears(['windows-1 (.*)', 'windows-2 (.*)'], 'direct_message,direct_mention,mention', function(bot, message) {
+controller.hears(['windows-1 ([^\s]+)', 'windows-2 (.*)'], 'direct_message,direct_mention,mention', function(bot, message) {
 	var opt = message.match[1];
-	var cmd = message.match[3];
+	var cmd = message.match[2];
 	var msg = message.match[0];
 	bot.reply(message, opt+" - "+cmd+" - "+msg);
 	/*if (opt == "windows-1" || opt == "windows-2") {
