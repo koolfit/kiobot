@@ -111,10 +111,10 @@ controller.hears('fenix nova service-list', 'direct_message,direct_mention,menti
 
 /************    Infrastructure Capacity  Fenix ************/
 
-controller.hears('([^\s]+) capacity', 'direct_message,direct_mention,mention', function(bot, message) {
+controller.hears('(.*) capacity', 'direct_message,direct_mention,mention', function(bot, message) {
 	var infra = message.match[1];
 	//bot.reply(message, message.match[1]);
-	if (infra == 'bessel') {
+	if (infra == "bessel") {
 	    bot.reply(message, 'Generando correo con información ... espera');
 	    const exec = require('child_process').exec;
 	    var command = 'ssh kftadmin@'+infra+' -p65535 "sudo -i bash -ic /root/infrastructureCapacity.sh 2>/dev/null"';
