@@ -182,7 +182,7 @@ controller.hears(['jordan graficas', 'jordan gráficas'], 'direct_message,direct
 controller.hears(['help', 'ayuda'], 'direct_message,direct_mention,mention', function(bot, message) {
     bot.api.users.info({user: message.user}, (error, response) => {
         let {name, real_name} = response.user;
-		help += 'Hola @'+name+', estos son los comandos que puedo recibir:\n\n';
+		var help = 'Hola @'+name+', estos son los comandos que puedo recibir:\n\n';
         help += '*Ya puedo generar las gráficas del Protocolo de Incidencias de GOB.MX!*\n\n\n';
     	help += '*Obtener URL de novnc*: `<infraestructura> novnc <nombre instancia>`\n';
     	help += 'ejemplo: `fenix novnc TEST_KPP`\n\n\n';
