@@ -255,9 +255,9 @@ controller.hears('date', 'direct_message,direct_mention,mention', function(bot, 
 
 controller.hears(['windows-1 ([^\s]+)', 'windows-2 (.*)'], 'direct_message,direct_mention,mention', function(bot, message) {
 	var opt = message.match[1];
-	var cmd = message.match[2];
+	var cmdWin = message.match[1][1];
 	var msg = message.match[0];
-	bot.reply(message, opt+" - "+cmd+" - "+msg);
+	bot.reply(message, opt+" - "+cmdWin+" - "+msg);
 	/*if (opt == "windows-1" || opt == "windows-2") {
 		var USER = 'Administrator';
 		var PASS = 'A1q2w3e$';
