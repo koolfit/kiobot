@@ -254,14 +254,17 @@ controller.hears('date', 'direct_message,direct_mention,mention', function(bot, 
 //psexec.py "$USER":"$PASS"@$HOST "$CMD" |grep -v "[*]"|egrep "Host Name|OS Name|System Boot Time"
 
 controller.hears(['windows-1 (.*)', 'windows-2 (.*)'], 'direct_message,direct_mention,mention', function(bot, message) {
-	var windows = message.match[1];
-	if (windows == "windows-1" || windows == "windows-2") {
-		var USER = "Administrator";
-		var PASS = "A1q2w3e$";
-		var IP = "10.49.5.233";
+	var opt = message.match[1];
+	var cmd = message.match[2];
+	var msg = message.match[0];
+	bot.reply(message, opt+" - "+cmd+" - "+msg);
+	/*if (opt == "windows-1" || opt == "windows-2") {
+		var USER = 'Administrator';
+		var PASS = 'A1q2w3e$';
+		var IP = '10.49.5.233';
 		bot.reply(message, 'Ejecutando comando... espera');
 	    const exec = require('child_process').exec;
-	    var command = "psexec.py "+USER+":"+PASS+"@"+IP+" "+message.match[2]+'" |grep -v "[*]" 2>/dev/null"';
+	    var command = "psexec.py "+USER+":"+PASS+"@"+IP+" "+message.match[2]+" |grep -v "[*]" 2>/dev/null";
 	    //var command = "ssh kftadmin@10.52.30.11 -p65535 \"/usr/local/bin/generate_zabbix_graphs_day.sh\" 2>/dev/null";
 	     const child = exec(command,
 	                  (error, stdout, stderr) => {
@@ -273,8 +276,8 @@ controller.hears(['windows-1 (.*)', 'windows-2 (.*)'], 'direct_message,direct_me
 	                      }
 	                      console.log('stderr: ${stderr}');
 	                  });
-	} else }
+	} else {
 		bot.reply(message, 'Selección inválida');
-	}
+	}*/
 
 });
