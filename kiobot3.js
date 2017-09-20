@@ -255,7 +255,7 @@ controller.hears('date', 'direct_message,direct_mention,mention', function(bot, 
 
 controller.hears(['windows-1 (.*)', 'windows-2 (.*)'], 'direct_message,direct_mention,mention', function(bot, message) {
 	var opt = message.match[1];
-	var cmd = message.match[2];
+	var cmd = message.match[3];
 	var msg = message.match[0];
 	bot.reply(message, opt+" - "+cmd+" - "+msg);
 	/*if (opt == "windows-1" || opt == "windows-2") {
