@@ -264,9 +264,8 @@ controller.hears('windows-1 (.*)', 'direct_message,direct_mention,mention', func
 		var IP = '10.49.5.233';
 		bot.reply(message, 'Ejecutando comando... espera');
 	    const exec = require('child_process').exec;
-	    var command = psexec.py+' '+USER+':'+PASS+'@'+IP+' '+message.match[2]+' |grep -v "[*]" 2>/dev/null';
-	    //var command = "ssh kftadmin@10.52.30.11 -p65535 \"/usr/local/bin/generate_zabbix_graphs_day.sh\" 2>/dev/null";
-	     const child = exec(command,
+	    var command = 'psexec.py'+' '+USER+':'+PASS+'@'+IP+' '+message.match[2]+' |grep -v "[*]" 2>/dev/null';
+	    const child = exec(command,
 	                  (error, stdout, stderr) => {
 	                      var output = stdout;
 	                      if (output) {
