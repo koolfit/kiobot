@@ -265,7 +265,8 @@ controller.hears('windows-1 (.*)', 'direct_message,direct_mention,mention', func
 		bot.reply(message, 'Ejecutando comando... espera');
 	    const exec = require('child_process').exec;
 	    //var command = 'psexec.py'+' '+USER+':'+PASS+'@'+IP+' '+message.match[2]+' |grep -v "[*]" 2>/dev/null';
-	    var command = "psexec.py Administrator:A1q2w3e$@10.49.5.233 "+cmd+' |grep -v "[*]" 2>/dev/null';
+	    //var command = "psexec.py Administrator:A1q2w3e$@10.49.5.233 "+cmd+' |grep -v "[*]" 2>/dev/null';
+	    var command = "psexec.py Administrator:A1q2w3e$@10.49.5.233 ipconfig 2>/dev/null"
 	    const child = exec(command,
 	                  (error, stdout, stderr) => {
 	                      var output = stdout;
