@@ -259,14 +259,16 @@ controller.hears('windows-1 (.*)', 'direct_message,direct_mention,mention', func
 	//var msg = message.match[0];
 	bot.reply(message, cmd);
 	//if (opt == "windows-1" || opt == "windows-2") {
-		var USER = 'Administrator';
-		var PASS = 'A1q2w3e$';
-		var IP = '10.49.5.233';
+		var USER = "Administrator";
+		var PASS = "A1q2w3e$";
+		var IP = "10.49.5.233";
 		bot.reply(message, 'Ejecutando comando... espera');
 	    const exec = require('child_process').exec;
-	    //var command = 'psexec.py'+' '+USER+':'+PASS+'@'+IP+' '+message.match[2]+' |grep -v "[*]" 2>/dev/null';
+	    //var command = 'psexec.py'+' '+USER+':"'+PASS+"'@'+IP+' '+message.match[2]+' |grep -v "[*]" 2>/dev/null';
+	    var command = "psexec.py "+"'"+USER+"':"+"'"+PASS+"'@"+IP+" '"+cmd+"'"+' |grep -v "[*]" 2>/dev/null';
 	    //var command = "psexec.py Administrator:A1q2w3e$@10.49.5.233 "+cmd+' |grep -v "[*]" 2>/dev/null';
-	    var command = "psexec.py Administrator:A1q2w3e$@10.49.5.233 ipconfig 2>/dev/null"
+	    //var command = "ssh kftadmin@10.52.30.11 -p65535 \"/usr/local/bin/generate_zabbix_graphs_day.sh\" 2>/dev/null";
+	    //var command = "psexec.py Administrator:A1q2w3e$@10.49.5.233 ipconfig 2>/dev/null"
 	    const child = exec(command,
 	                  (error, stdout, stderr) => {
 	                      var output = stdout;
