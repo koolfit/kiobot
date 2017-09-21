@@ -253,11 +253,11 @@ controller.hears('date', 'direct_message,direct_mention,mention', function(bot, 
 
 //psexec.py "$USER":"$PASS"@$HOST "$CMD" |grep -v "[*]"|egrep "Host Name|OS Name|System Boot Time"
 
-controller.hears('windows-1 (.*)', 'direct_message,direct_mention,mention', function(bot, message) {
+controller.hears('windows (.*)', 'direct_message,direct_mention,mention', function(bot, message) {
 	var cmd = message.match[1];
 	//var cmdWin = message.match[1][1];
 	//var msg = message.match[0];
-	bot.reply(message, cmd);
+	bot.reply(message, '`'+cmd+'`');
 	//if (opt == "windows-1" || opt == "windows-2") {
 		var USER = "Administrator";
 		var PASS = "A1q2w3e$";
