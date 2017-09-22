@@ -196,8 +196,8 @@ controller.hears(['help', 'ayuda'], 'direct_message,direct_mention,mention', fun
         help += '*Obtener gráficas del protocolo de incidencias:* `jordan gráficas`\n\n\n';
         help += '*Generar reporte de capacidad de infraestructura:* `<infraestructura> capacity`\n\n\n';
         help += '*Para listar las infraestructuras disponibles: *`infraestructuras`\n\n\n';
-        help += '*Comandos en MS Windows: `<windows> .*`\n\n\n';
-        help += '*Screenshot de consola VM: `<screenshot> .*`\n\n\n';
+        help += '*Comandos en MS Windows:* `<windows> .*`\n\n\n';
+        help += '*Screenshot de consola VM:* `<screenshot> .*`\n\n\n';
     bot.reply(message, help);
 	})
 });
@@ -301,7 +301,7 @@ controller.hears('screenshot (.*)', 'direct_message,direct_mention,mention', fun
                       var output = stdout;
                       if (output) {
                         var fs = require('fs');
-                        filename='/home/ubuntu/'+output;
+                        filename='/home/ubuntu/kiobot/'+output;
                         bot.api.files.upload({
                           token: process.env.token,
                           title: "Screenshot",
