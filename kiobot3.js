@@ -275,7 +275,8 @@ controller.hears('windows (.*)', 'direct_message,direct_mention,mention', functi
 	                  (error, stdout, stderr) => {
 	                      var output = stdout;
 	                      if (output) {
-	                          bot.reply(message, '```output```\n```---------------------------------'+output+'```');
+	                      	output=output.replace(/(\r\n|\n|\r)/gm,"");
+	                        bot.reply(message, '```output```\n```---------------------------------'+output+'```');
 	                      } else {
 	                          bot.reply(message, 'No pude obtener respuesta');
 	                      }
