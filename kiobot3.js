@@ -302,7 +302,7 @@ controller.hears('screenshot (.*)', 'direct_message,direct_mention,mention', fun
                       var output = stdout;
                       if (output) {
                         var fs = require('fs');
-                        filename='/home/ubuntu/kiobot/'+output;
+                        filename= output;
                         bot.api.files.upload({
                           token: process.env.token,
                           title: "Screenshot",
