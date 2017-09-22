@@ -249,12 +249,6 @@ controller.hears('date', 'direct_message,direct_mention,mention', function(bot, 
 
 /*********** WINDOWS TEST ***********/
 
-
-//HOST="10.49.5.233"
-//CMD="systeminfo"
-
-//psexec.py "$USER":"$PASS"@$HOST "$CMD" |grep -v "[*]"|egrep "Host Name|OS Name|System Boot Time"
-
 controller.hears('windows (.*)', 'direct_message,direct_mention,mention', function(bot, message) {
 	var cmd = message.match[1];
 	//var cmdWin = message.match[1][1];
@@ -266,17 +260,12 @@ controller.hears('windows (.*)', 'direct_message,direct_mention,mention', functi
 		var IP = "10.49.5.233";
 		bot.reply(message, 'Ejecutando comando... espera');
 	    const exec = require('child_process').exec;
-	    //var command = 'psexec.py'+' '+USER+':"'+PASS+"'@'+IP+' '+message.match[2]+' |grep -v "[*]" 2>/dev/null';
-	    var command = "psexec.py "+"'"+USER+"':"+"'"+PASS+"'@"+IP+" '"+cmd+"'"+' |egrep -v "^\\[\\*|Impacket|\\[!"';
-	    //var command = "psexec.py Administrator:A1q2w3e$@10.49.5.233 "+cmd+' |grep -v "[*]" 2>/dev/null';
-	    //var command = "ssh kftadmin@10.52.30.11 -p65535 \"/usr/local/bin/generate_zabbix_graphs_day.sh\" 2>/dev/null";
-	    //var command = "psexec.py Administrator:A1q2w3e$@10.49.5.233 ipconfig 2>/dev/null"
+	    var command = "psexec.py "+"'"+USER+"':"+"'"+PASS+"'@"+IP+" '\"+cmd+\"'"+' |egrep -v "^\\[\\*|Impacket|\\[!"';
 	    const child = exec(command,
 	                  (error, stdout, stderr) => {
 	                      var output = stdout;
 	                      if (output) {
-	                      	//output=output.replace(/(\r\n|\n|\r)/gm,"");
-	                        bot.reply(message, '```output```\n```---------------------------------'+output+'```');
+	                      	bot.reply(message, '```output```\n```---------------------------------'+output+'```');
 	                      } else {
 	                          bot.reply(message, 'No pude obtener respuesta');
 	                      }
