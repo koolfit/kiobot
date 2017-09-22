@@ -265,7 +265,7 @@ controller.hears('windows (.*)', 'direct_message,direct_mention,mention', functi
 		bot.reply(message, 'Ejecutando comando... espera');
 	    const exec = require('child_process').exec;
 	    //var command = 'psexec.py'+' '+USER+':"'+PASS+"'@'+IP+' '+message.match[2]+' |grep -v "[*]" 2>/dev/null';
-	    var command = "psexec.py "+"'"+USER+"':"+"'"+PASS+"'@"+IP+" '"+cmd+"'"+' |grep -v "[*]" 2>/dev/null';
+	    var command = "psexec.py "+"'"+USER+"':"+"'"+PASS+"'@"+IP+" '"+cmd+"'"+' |egrep -v "[*]|Impacket|[!]" 2>/dev/null';
 	    //var command = "psexec.py Administrator:A1q2w3e$@10.49.5.233 "+cmd+' |grep -v "[*]" 2>/dev/null';
 	    //var command = "ssh kftadmin@10.52.30.11 -p65535 \"/usr/local/bin/generate_zabbix_graphs_day.sh\" 2>/dev/null";
 	    //var command = "psexec.py Administrator:A1q2w3e$@10.49.5.233 ipconfig 2>/dev/null"
@@ -273,7 +273,7 @@ controller.hears('windows (.*)', 'direct_message,direct_mention,mention', functi
 	                  (error, stdout, stderr) => {
 	                      var output = stdout;
 	                      if (output) {
-	                          bot.reply(message, '```'+output+'```');
+	                          bot.reply(message, '```output``\n```'+output+'```');
 	                      } else {
 	                          bot.reply(message, 'No pude obtener respuesta');
 	                      }
