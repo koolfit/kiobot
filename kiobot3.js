@@ -196,6 +196,8 @@ controller.hears(['help', 'ayuda'], 'direct_message,direct_mention,mention', fun
         help += '*Obtener gráficas del protocolo de incidencias:* `jordan gráficas`\n\n\n';
         help += '*Generar reporte de capacidad de infraestructura:* `<infraestructura> capacity`\n\n\n';
         help += '*Para listar las infraestructuras disponibles: *`infraestructuras`\n\n\n';
+        help += '*Comandos en MS Windows: `<windows> .*`\n\n\n';
+        help += '*Screenshot de consola VM: `<screenshot> .*`\n\n\n';
     bot.reply(message, help);
 	})
 });
@@ -283,4 +285,42 @@ controller.hears('windows (.*)', 'direct_message,direct_mention,mention', functi
 	//	bot.reply(message, 'Selección inválida');
 	//}
 
+});
+
+/*********** CONSOLE SCREENSHOT ***********/
+/*********** TEST ***********/
+
+controller.hears('screenshot (.*)', 'direct_message,direct_mention,mention', function(bot, message) {
+        var api_command = message.match[1];
+        const exec = require('child_process').exec;
+        var command = '/home/ubuntu/get_winexec_screenshot.sh "'+api_command+'" 2>/dev/null';
+        var filename;
+        bot.reply(message,{text: 'Generando screenshot... espera'});
+    const child = exec(command,
+                  (error, stdout, stderr) => {
+                      var output = stdout;
+                      if (output) {
+                        var fs = require('fs');
+                        filename='/home/ubuntu/'+output;
+                        bot.api.files.upload({
+                          token: process.env.token,
+                          title: "Screenshot",
+                          filename: output,
+                          filetype: "auto",
+                          //content: "Posted with files.upload API",
+                          file: fs.createReadStream(filename),
+                          channels: message.channel
+                        }, function(err, response) {
+                          if (err) {
+                            console.log("Error (files.upload) " + err);
+                          } else {
+                            console.log("Success (files.upload) " + response);
+                          };
+                        });
+                      }
+                      else {
+                          bot.reply(message, ':( Hubo un error al invocar la API');
+                      }
+                      console.log('stderr: +${stderr}');
+                  });
 });
