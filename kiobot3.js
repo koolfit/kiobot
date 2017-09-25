@@ -248,6 +248,7 @@ controller.hears('date', 'direct_message,direct_mention,mention', function(bot, 
 
 
 /*********** WINDOWS TEST ***********/
+//cmd /c "systeminfo | findstr "System Boot"
 
 controller.hears('windows (.*)', 'direct_message,direct_mention,mention', function(bot, message) {
 	var cmd = message.match[1];
@@ -260,7 +261,7 @@ controller.hears('windows (.*)', 'direct_message,direct_mention,mention', functi
 		var IP = "10.49.5.233";
 		bot.reply(message, 'Ejecutando comando... espera');
 	    const exec = require('child_process').exec;
-	    var command = "psexec.py "+"'"+USER+"':"+"'"+PASS+"'@"+IP+" '"+cmd+"'"+' |egrep -v "^\\[\\*|Impacket|\\[!"';
+	    var command = "psexec.py "+"'"+USER+"':"+"'"+PASS+"'@"+IP+" cmd /c '"+cmd+"'"+' |egrep -v "^\\[\\*|Impacket|\\[!"';
 	    const child = exec(command,
 	                  (error, stdout, stderr) => {
 	                      var output = stdout;
