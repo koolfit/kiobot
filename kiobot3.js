@@ -253,7 +253,7 @@ controller.hears('windows (.*)', 'direct_message,direct_mention,mention', functi
 		var PASS = "A1q2w3e$";
 		var IP = "10.49.5.233";
     switch (cmd) {
-      case /shutdown/.cmd:
+      case "shutdown -r -t 0":
           bot.reply(message, 'Ejecutando comando... espera');
           const execShutdown = require('child_process').execShutdown;
           var commandShutdown = "psexec.py "+"'"+USER+"':"+"'"+PASS+"'@"+IP+" cmd /c '"+cmd+"'"+' |egrep -v "^\\[\\*|Impacket|\\[!"';
