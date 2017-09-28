@@ -252,12 +252,13 @@ controller.hears('windows (.*)', 'direct_message,direct_mention,mention', functi
 		var USER = "Administrator";
 		var PASS = "A1q2w3e$";
 		var IP = "10.49.5.233";
-    switch (cmd) {
-      case "shutdown -r -t 0":
+    //switch (cmd) {
+      //case "shutdown -r -t 0":
+    if (cmd == "shutdown -r -t 0"){
           bot.reply(message, 'Comando `shutdown` detectado... espera');
           const execShutdown = require('child_process').execShutdown;
           var commandShutdown = "psexec.py "+"'"+USER+"':"+"'"+PASS+"'@"+IP+" cmd /c '"+cmd+"'"+' |egrep -v "^\\[\\*|Impacket|\\[!"';
-          const childShutdown = execShutdown(commandShutdown,
+          const childShutdown = exec(commandShutdown,
                         (error, stdout, stderr) => {
                             var output = stdout;
                             if (output) {
@@ -265,7 +266,7 @@ controller.hears('windows (.*)', 'direct_message,direct_mention,mention', functi
                                 /*bot.reply(message, 'Iniciando monitor... espera');
                                 const execMonitor = require('child_process').execMonitor;
                                 var commandMonitor = "/home/ubuntu/start_monitor.sh 2>/dev/nul";
-                                const child2 = execMonitor(commandMonitor,
+                                const child2 = exec(commandMonitor,
                                     (error, stdout, stderr) => {
                                         var output2 = stdout;
                                         if (output2) {
@@ -280,9 +281,10 @@ controller.hears('windows (.*)', 'direct_message,direct_mention,mention', functi
                             }
                             console.log('stderr: ${stderr}');
                         });
-        break;
+        //break;
 
-      default:
+      //default:
+    }else{
     		bot.reply(message, 'Ejecutando comando... espera');
     	    const exec = require('child_process').exec;
     	    var command = "psexec.py "+"'"+USER+"':"+"'"+PASS+"'@"+IP+" cmd /c '"+cmd+"'"+' |egrep -v "^\\[\\*|Impacket|\\[!"';
@@ -296,9 +298,9 @@ controller.hears('windows (.*)', 'direct_message,direct_mention,mention', functi
     	                      }
     	                      console.log('stderr: ${stderr}');
     	                  });
-        break;
-    }//switch
-
+        //break;
+    //}//switch
+    }
 });
 
 /*********** CONSOLE SCREENSHOT ***********/
