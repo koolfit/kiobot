@@ -263,7 +263,39 @@ controller.hears('windows (.*)', 'direct_message,direct_mention,mention', functi
                         (error, stdout, stderr) => {
                             var output = stdout;
                             if (output) {
-                              bot.reply(message, '```output```\n```---------------------------------'+output+'```');
+                              //bot.reply(message, '```output```\n```---------------------------------'+output+'```');
+                                  var api_command = "screenshot x";
+                                  var execScreenshot = require('child_process').execScreenshot;
+                                  var commandScreenshot = '/home/ubuntu/get_winexec_screenshot.sh "'+api_command+'" 2>/dev/null';
+                                  var filename;
+                                  //bot.reply(message,{text: 'Generando screenshot... espera'});
+                                  var childScreenshot = exec(commandScreenshot,
+                                            (error, stdout, stderr) => {
+                                                var output = stdout;
+                                                if (output) {
+                                                  var fs = require('fs');
+                                                  filename= output;
+                                                  bot.api.files.upload({
+                                                    token: process.env.token,
+                                                    title: "Screenshot",
+                                                    filename: output,
+                                                    filetype: "auto",
+                                                    //content: "Posted with files.upload API",
+                                                    file: fs.createReadStream(filename),
+                                                    channels: message.channel
+                                                  }, function(err, response) {
+                                                    if (err) {
+                                                      console.log("Error (files.upload) " + err);
+                                                    } else {
+                                                      console.log("Success (files.upload) " + response);
+                                                    };
+                                                  });
+                                                }
+                                                else {
+                                                    bot.reply(message, ':( Hubo un error al invocar la API');
+                                                }
+                                                console.log('stderr: +${stderr}');
+                                            });
                              } else {
                                 bot.reply(message, 'No pude obtener respuesta');
                             }
@@ -273,10 +305,10 @@ controller.hears('windows (.*)', 'direct_message,direct_mention,mention', functi
 
       default:
     //}else{
-    		/*bot.reply(message, 'Ejecutando comando... espera');
-    	    const execDefault = require('child_process').execDefault;
+    		bot.reply(message, 'Ejecutando comando... espera');
+    	    var execDefault = require('child_process').execDefault;
     	    var command = "psexec.py "+"'"+USER+"':"+"'"+PASS+"'@"+IP+" cmd /c '"+cmd+"'"+' |egrep -v "^\\[\\*|Impacket|\\[!"';
-    	    const childDefault = execDefault(command,
+    	    var childDefault = exec(command,
     	                  (error, stdout, stderr) => {
     	                      var output = stdout;
     	                      if (output) {
@@ -285,7 +317,7 @@ controller.hears('windows (.*)', 'direct_message,direct_mention,mention', functi
     	                          bot.reply(message, 'No pude obtener respuesta');
     	                      }
     	                      console.log('stderr: ${stderr}');
-    	                  });*/
+    	                  });
         break;
     }//switch
     //}
