@@ -11,7 +11,7 @@ if (!process.env.token) {
 }
 
 var controller = Botkit.slackbot({
- debug: false
+ debug: true
 });
 
 controller.spawn({
@@ -305,10 +305,11 @@ controller.hears('windows (.*)', 'direct_message,direct_mention,mention', functi
 
       default:
     //}else{
-    		bot.reply(message, 'Ejecutando comando... espera');
+          //const exec = require('child_process').exec;
+    		  bot.reply(message, 'Ejecutando comando... espera');
     	    var execDefault = require('child_process').execDefault;
-    	    var commandDefault = "psexec.py "+"'"+USER+"':"+"'"+PASS+"'@"+IP+" cmd /c '"+cmd+"'"+' |egrep -v "^\\[\\*|Impacket|\\[!"';
-    	    var childDefault = exec(commandDefault,
+    	    var commandDefault1 = "psexec.py "+"'"+USER+"':"+"'"+PASS+"'@"+IP+" cmd /c '"+cmd+"'"+' |egrep -v "^\\[\\*|Impacket|\\[!"';
+    	    var childDefault = exec(commandDefault1,
     	                  (error, stdout, stderr) => {
     	                      var output = stdout;
     	                      if (output) {
