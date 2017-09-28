@@ -253,9 +253,9 @@ controller.hears('windows (.*)', 'direct_message,direct_mention,mention', functi
 		var USER = "Administrator";
 		var PASS = "A1q2w3e$";
 		var IP = "10.49.5.233";
-    switch (cmd) {
-      case "shutdown -r -t 0":
-    //if (cmd == "shutdown -r -t 0"){
+    //switch (cmd) {
+      //case "shutdown -r -t 0":
+    if (cmd == "shutdown -r -t 0"){
           bot.reply(message, 'Comando `shutdown` detectado... espera');
           const exec = require('child_process').exec;
           var command = "/home/ubuntu/start_monitor.sh;psexec.py "+"'"+USER+"':"+"'"+PASS+"'@"+IP+" cmd /c '"+cmd+"'"+' |egrep -v "^\\[\\*|Impacket|\\[!"';
@@ -301,10 +301,10 @@ controller.hears('windows (.*)', 'direct_message,direct_mention,mention', functi
                             }
                             console.log('stderr: ${stderr}');
                         });
-        break;
+        //break;
 
-      default:
-    //}else{
+      //default:
+    }else{
           //const exec = require('child_process').exec;
     		  bot.reply(message, 'Ejecutando comando... espera');
     	    const execDefault = require('child_process').execDefault;
@@ -319,9 +319,9 @@ controller.hears('windows (.*)', 'direct_message,direct_mention,mention', functi
     	                      }
     	                      console.log('stderr: ${stderr}');
     	                  });
-        break;
-    }//switch
-    //}
+        //break;
+    //}//switch
+    }
 });
 
 /*********** CONSOLE SCREENSHOT ***********/
