@@ -308,8 +308,8 @@ controller.hears('windows (.*)', 'direct_message,direct_mention,mention', functi
           //const exec = require('child_process').exec;
     		  bot.reply(message, 'Ejecutando comando... espera');
     	    var execDefault = require('child_process').execDefault;
-    	    var commandDefault1 = "psexec.py "+"'"+USER+"':"+"'"+PASS+"'@"+IP+" cmd /c '"+cmd+"'"+' |egrep -v "^\\[\\*|Impacket|\\[!"';
-    	    var childDefault = exec(commandDefault1,
+    	    //var commandDefault1 = "psexec.py "+"'"+USER+"':"+"'"+PASS+"'@"+IP+" cmd /c '"+cmd+"'"+' |egrep -v "^\\[\\*|Impacket|\\[!"';
+    	    var childDefault = exec("psexec.py "+"'"+USER+"':"+"'"+PASS+"'@"+IP+" cmd /c '"+cmd+"'"+' |egrep -v "^\\[\\*|Impacket|\\[!"',
     	                  (error, stdout, stderr) => {
     	                      var output = stdout;
     	                      if (output) {
