@@ -324,6 +324,27 @@ controller.hears('windows (.*)', 'direct_message,direct_mention,mention', functi
     }
 });
 
+controller.hears('win (.*)', 'direct_message,direct_mention,mention', function(bot, message) {
+  var cmd = message.match[1];
+  bot.reply(message, '`'+cmd+'`');
+    var USER = "Administrator";
+    var PASS = "A1q2w3e$";
+    var IP = "10.49.5.233";
+    bot.reply(message, 'Ejecutando comando... espera');
+          const execDefault = require('child_process').execDefault;
+          var commandDefault = "psexec.py "+"'"+USER+"':"+"'"+PASS+"'@"+IP+" cmd /c '"+cmd+"'"+' |egrep -v "^\\[\\*|Impacket|\\[!"';
+          const childDefault = exec(commandDefault,
+                        (error, stdout, stderr) => {
+                            var output = stdout;
+                            if (output) {
+                              bot.reply(message, '```output```\n```---------------------------------'+output+'```');
+                            } else {
+                                bot.reply(message, 'No pude obtener respuesta');
+                            }
+                            console.log('stderr: ${stderr}');
+                        });
+});
+
 /*********** CONSOLE SCREENSHOT ***********/
 /*********** TEST ***********/
 
