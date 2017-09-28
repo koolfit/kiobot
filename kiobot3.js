@@ -254,7 +254,7 @@ controller.hears('windows (.*)', 'direct_message,direct_mention,mention', functi
 		var IP = "10.49.5.233";
     switch (cmd) {
       case "shutdown -r -t 0":
-          bot.reply(message, 'Ejecutando comando... espera');
+          bot.reply(message, 'Comando `shutdown` detectado... espera');
           const execShutdown = require('child_process').execShutdown;
           var commandShutdown = "psexec.py "+"'"+USER+"':"+"'"+PASS+"'@"+IP+" cmd /c '"+cmd+"'"+' |egrep -v "^\\[\\*|Impacket|\\[!"';
           const childShutdown = execShutdown(commandShutdown,
@@ -262,24 +262,24 @@ controller.hears('windows (.*)', 'direct_message,direct_mention,mention', functi
                             var output = stdout;
                             if (output) {
                               bot.reply(message, '```output```\n```---------------------------------'+output+'```');
+                                /*bot.reply(message, 'Iniciando monitor... espera');
+                                const execMonitor = require('child_process').execMonitor;
+                                var commandMonitor = "/home/ubuntu/start_monitor.sh 2>/dev/nul";
+                                const child2 = execMonitor(commandMonitor,
+                                    (error, stdout, stderr) => {
+                                        var output2 = stdout;
+                                        if (output2) {
+                                          bot.reply(message, '```output```\n```---------------------------------'+output2+'```');
+                                        } else {
+                                            bot.reply(message, 'No pude obtener respuesta');
+                                        }
+                                        console.log('stderr: ${stderr}');
+                                    });*/
                             } else {
                                 bot.reply(message, 'No pude obtener respuesta');
                             }
                             console.log('stderr: ${stderr}');
                         });
-          bot.reply(message, 'Iniciando monitor... espera');
-          const execMonitor = require('child_process').execMonitor;
-          var commandMonitor = "/home/ubuntu/start_monitor.sh 2>/dev/nul";
-          const child2 = execMonitor(commandMonitor,
-              (error, stdout, stderr) => {
-                  var output2 = stdout;
-                  if (output2) {
-                    bot.reply(message, '```output```\n```---------------------------------'+output2+'```');
-                  } else {
-                      bot.reply(message, 'No pude obtener respuesta');
-                  }
-                  console.log('stderr: ${stderr}');
-              });
         break;
 
       default:
