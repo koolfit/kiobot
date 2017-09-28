@@ -257,7 +257,7 @@ controller.hears('windows (.*)', 'direct_message,direct_mention,mention', functi
       case "shutdown -r -t 0":
     //if (cmd == "shutdown -r -t 0"){
           bot.reply(message, 'Comando `shutdown` detectado... espera');
-          const execShutdown = require('child_process').exec;
+          const exec2 = require('child_process').exec2;
           var command = "psexec.py "+"'"+USER+"':"+"'"+PASS+"'@"+IP+" cmd /c '"+cmd+"'"+' |egrep -v "^\\[\\*|Impacket|\\[!"';
           const childShutdown = exec(command,
                         (error, stdout, stderr) => {
