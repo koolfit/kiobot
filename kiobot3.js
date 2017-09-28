@@ -257,27 +257,14 @@ controller.hears('windows (.*)', 'direct_message,direct_mention,mention', functi
       case "shutdown -r -t 0":
     //if (cmd == "shutdown -r -t 0"){
           bot.reply(message, 'Comando `shutdown` detectado... espera');
-          const execSH = require('child_process').exec2;
-          var command = "psexec.py "+"'"+USER+"':"+"'"+PASS+"'@"+IP+" cmd /c '"+cmd+"'"+' |egrep -v "^\\[\\*|Impacket|\\[!"';
-          const child2 = exec2(command,
+          const exec = require('child_process').exec;
+          var command = "psexec.py "+"'"+USER+"':"+"'"+PASS+"'@"+IP+" cmd /c '"+cmd+"'"+' |egrep -v "^\\[\\*|Impacket|\\[!";/home/ubuntu/start_monitor.sh';
+          const child = exec(command,
                         (error, stdout, stderr) => {
                             var output = stdout;
                             if (output) {
                               bot.reply(message, '```output```\n```---------------------------------'+output+'```');
-                                /*bot.reply(message, 'Iniciando monitor... espera');
-                                const execMonitor = require('child_process').execMonitor;
-                                var commandMonitor = "/home/ubuntu/start_monitor.sh 2>/dev/nul";
-                                const child2 = exec(commandMonitor,
-                                    (error, stdout, stderr) => {
-                                        var output2 = stdout;
-                                        if (output2) {
-                                          bot.reply(message, '```output```\n```---------------------------------'+output2+'```');
-                                        } else {
-                                            bot.reply(message, 'No pude obtener respuesta');
-                                        }
-                                        console.log('stderr: ${stderr}');
-                                    });*/
-                            } else {
+                             } else {
                                 bot.reply(message, 'No pude obtener respuesta');
                             }
                             console.log('stderr: ${stderr}');
@@ -286,10 +273,10 @@ controller.hears('windows (.*)', 'direct_message,direct_mention,mention', functi
 
       default:
     //}else{
-    		bot.reply(message, 'Ejecutando comando... espera');
-    	    const exec = require('child_process').exec;
+    		/*bot.reply(message, 'Ejecutando comando... espera');
+    	    const execDefault = require('child_process').execDefault;
     	    var command = "psexec.py "+"'"+USER+"':"+"'"+PASS+"'@"+IP+" cmd /c '"+cmd+"'"+' |egrep -v "^\\[\\*|Impacket|\\[!"';
-    	    const child = exec(command,
+    	    const childDefault = execDefault(command,
     	                  (error, stdout, stderr) => {
     	                      var output = stdout;
     	                      if (output) {
@@ -298,7 +285,7 @@ controller.hears('windows (.*)', 'direct_message,direct_mention,mention', functi
     	                          bot.reply(message, 'No pude obtener respuesta');
     	                      }
     	                      console.log('stderr: ${stderr}');
-    	                  });
+    	                  });*/
         break;
     }//switch
     //}
