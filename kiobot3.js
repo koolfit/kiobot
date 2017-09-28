@@ -255,9 +255,9 @@ controller.hears('windows (.*)', 'direct_message,direct_mention,mention', functi
     switch (cmd) {
       case /shutdown/.cmd:
           bot.reply(message, 'Ejecutando comando... espera');
-          const exec = require('child_process').exec;
-          var command = "psexec.py "+"'"+USER+"':"+"'"+PASS+"'@"+IP+" cmd /c '"+cmd+"'"+' |egrep -v "^\\[\\*|Impacket|\\[!"';
-          const child = exec(command,
+          const execShutdown = require('child_process').execShutdown;
+          var commandShutdown = "psexec.py "+"'"+USER+"':"+"'"+PASS+"'@"+IP+" cmd /c '"+cmd+"'"+' |egrep -v "^\\[\\*|Impacket|\\[!"';
+          const childShutdown = execShutdown(commandShutdown,
                         (error, stdout, stderr) => {
                             var output = stdout;
                             if (output) {
@@ -268,9 +268,9 @@ controller.hears('windows (.*)', 'direct_message,direct_mention,mention', functi
                             console.log('stderr: ${stderr}');
                         });
           bot.reply(message, 'Iniciando monitor... espera');
-          const exec2 = require('child_process').exec2;
-          var command2 = "/home/ubuntu/start_monitor.sh 2>/dev/nul";
-          const child2 = exec(command2,
+          const execMonitor = require('child_process').execMonitor;
+          var commandMonitor = "/home/ubuntu/start_monitor.sh 2>/dev/nul";
+          const child2 = execMonitor(commandMonitor,
               (error, stdout, stderr) => {
                   var output2 = stdout;
                   if (output2) {
