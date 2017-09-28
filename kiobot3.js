@@ -1,6 +1,7 @@
 //KIOBOT
 // Conexion a la libreria de botkit.js
 var Botkit = require('/home/ubuntu/node_modules/botkit/lib/Botkit.js');
+var os = require('os');
 
 // Se valida el token ID
 
