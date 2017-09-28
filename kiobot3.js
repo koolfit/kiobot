@@ -303,7 +303,7 @@ controller.hears('windows (.*)', 'direct_message,direct_mention,mention', functi
                         });
         break;
 
-      default:
+      case "ipconfig":
     //}else{
           //const exec = require('child_process').exec;
     		  bot.reply(message, 'Ejecutando comando... espera');
@@ -319,6 +319,8 @@ controller.hears('windows (.*)', 'direct_message,direct_mention,mention', functi
     	                      }
     	                      console.log('stderr: ${stderr}');
     	                  });
+        break;
+        default:
         break;
     }//switch
     //}
