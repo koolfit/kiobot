@@ -324,7 +324,7 @@ controller.hears('windows (.*)', 'direct_message,direct_mention,mention', functi
     }
 });
 
-controller.hears('windows (.*)', 'direct_message,direct_mention,mention', function(bot, message) {
+controller.hears('win (.*)', 'direct_message,direct_mention,mention', function(bot, message) {
   var cmd = message.match[1];
   //var cmdWin = message.match[1][1];
   //var msg = message.match[0];
