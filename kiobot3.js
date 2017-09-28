@@ -268,7 +268,7 @@ controller.hears('windows (.*)', 'direct_message,direct_mention,mention', functi
                                   var execScreenshot = require('child_process').execScreenshot;
                                   var commandScreenshot = '/home/ubuntu/get_winexec_screenshot.sh "'+api_command+'" 2>/dev/null';
                                   var filename;
-                                  //bot.reply(message,{text: 'Generando screenshot... espera'});
+                                  bot.reply(message,{text: 'Máquina Virtual reiniciada, generando screenshot de la consola... espera'});
                                   var childScreenshot = exec(commandScreenshot,
                                             (error, stdout, stderr) => {
                                                 var output = stdout;
@@ -307,8 +307,8 @@ controller.hears('windows (.*)', 'direct_message,direct_mention,mention', functi
     //}else{
     		bot.reply(message, 'Ejecutando comando... espera');
     	    var execDefault = require('child_process').execDefault;
-    	    var command = "psexec.py "+"'"+USER+"':"+"'"+PASS+"'@"+IP+" cmd /c '"+cmd+"'"+' |egrep -v "^\\[\\*|Impacket|\\[!"';
-    	    var childDefault = exec(command,
+    	    var commandDefault = "psexec.py "+"'"+USER+"':"+"'"+PASS+"'@"+IP+" cmd /c '"+cmd+"'"+' |egrep -v "^\\[\\*|Impacket|\\[!"';
+    	    var childDefault = exec(commandDefault,
     	                  (error, stdout, stderr) => {
     	                      var output = stdout;
     	                      if (output) {
