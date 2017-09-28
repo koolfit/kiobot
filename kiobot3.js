@@ -324,25 +324,32 @@ controller.hears('windows (.*)', 'direct_message,direct_mention,mention', functi
     }
 });
 
-controller.hears('win (.*)', 'direct_message,direct_mention,mention', function(bot, message) {
+controller.hears('windows (.*)', 'direct_message,direct_mention,mention', function(bot, message) {
   var cmd = message.match[1];
+  //var cmdWin = message.match[1][1];
+  //var msg = message.match[0];
   bot.reply(message, '`'+cmd+'`');
+  //if (opt == "windows-1" || opt == "windows-2") {
     var USER = "Administrator";
     var PASS = "A1q2w3e$";
     var IP = "10.49.5.233";
     bot.reply(message, 'Ejecutando comando... espera');
-          const execDefault = require('child_process').execDefault;
-          var commandDefault = "psexec.py "+"'"+USER+"':"+"'"+PASS+"'@"+IP+" cmd /c '"+cmd+"'"+' |egrep -v "^\\[\\*|Impacket|\\[!"';
-          const childDefault = exec(commandDefault,
-                        (error, stdout, stderr) => {
-                            var output = stdout;
-                            if (output) {
-                              bot.reply(message, '```output```\n```---------------------------------'+output+'```');
-                            } else {
-                                bot.reply(message, 'No pude obtener respuesta');
-                            }
-                            console.log('stderr: ${stderr}');
-                        });
+      const exec = require('child_process').exec;
+      var command = "psexec.py "+"'"+USER+"':"+"'"+PASS+"'@"+IP+" cmd /c '"+cmd+"'"+' |egrep -v "^\\[\\*|Impacket|\\[!"';
+      const child = exec(command,
+                    (error, stdout, stderr) => {
+                        var output = stdout;
+                        if (output) {
+                          bot.reply(message, '```output```\n```---------------------------------'+output+'```');
+                        } else {
+                            bot.reply(message, 'No pude obtener respuesta');
+                        }
+                        console.log('stderr: ${stderr}');
+                    });
+  //} else {
+  //  bot.reply(message, 'Selección inválida');
+  //}
+
 });
 
 /*********** CONSOLE SCREENSHOT ***********/
