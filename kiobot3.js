@@ -307,20 +307,18 @@ controller.hears('windows (.*)', 'direct_message,direct_mention,mention', functi
     }else{
           //const exec = require('child_process').exec;
     		  bot.reply(message, 'Ejecutando comando... espera');
-    	    const execDefault = require('child_process').execDefault;
-    	    var commandDefault = "psexec.py "+"'"+USER+"':"+"'"+PASS+"'@"+IP+" cmd /c '"+cmd+"'"+' |egrep -v "^\\[\\*|Impacket|\\[!"';
-    	    const childDefault = exec(commandDefault,
-    	                  (error, stdout, stderr) => {
-    	                      var output = stdout;
-    	                      if (output) {
-    	                      	bot.reply(message, '```output```\n```---------------------------------'+output+'```');
-    	                      } else {
-    	                          bot.reply(message, 'No pude obtener respuesta');
-    	                      }
-    	                      console.log('stderr: ${stderr}');
-    	                  });
-        //break;
-    //}//switch
+          const exec = require('child_process').exec;
+          var command = "psexec.py "+"'"+USER+"':"+"'"+PASS+"'@"+IP+" cmd /c '"+cmd+"'"+' |egrep -v "^\\[\\*|Impacket|\\[!"';
+          const child = exec(command,
+                    (error, stdout, stderr) => {
+                        var output = stdout;
+                        if (output) {
+                          bot.reply(message, '```output```\n```---------------------------------'+output+'```');
+                        } else {
+                            bot.reply(message, 'No pude obtener respuesta');
+                        }
+                        console.log('stderr: ${stderr}');
+                    });
     }
 });
 
