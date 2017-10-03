@@ -258,7 +258,7 @@ controller.hears('windows (.*)', 'direct_message,direct_mention,mention', functi
     if (cmd == "shutdown -r -t 0"){
           bot.reply(message, 'Comando `shutdown` detectado... espera');
           const exec = require('child_process').exec;
-          var command = "/home/ubuntu/start_monitor.sh;sleep 2;psexec.py "+"'"+USER+"':"+"'"+PASS+"'@"+IP+" cmd /c '"+cmd+"'"+' |egrep -v "^\\[\\*|Impacket|\\[!"';
+          var command = "/home/ubuntu/start_monitor.sh;sleep 1;psexec.py "+"'"+USER+"':"+"'"+PASS+"'@"+IP+" cmd /c '"+cmd+"'"+' |egrep -v "^\\[\\*|Impacket|\\[!"';
           const child = exec(command,
                         (error, stdout, stderr) => {
                             var output = stdout;
