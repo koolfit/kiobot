@@ -14,6 +14,7 @@ var controller = Botkit.slackbot({
  debug: true
 });
 
+
 controller.spawn({
   token: process.env.token
 }).startRTM(function(err) {
@@ -391,7 +392,7 @@ controller.hears('screenshot (.*)', 'direct_message,direct_mention,mention', fun
 
 /*********** BOT TALK ***********/
 
-controller.hears(['hello', 'hi'], 'direct_message,direct_mention,mention', function(bot, message) {
+controller.hears(['hello', 'hi', 'hola'], 'direct_message,direct_mention,mention', function(bot, message) {
 
     bot.api.reactions.add({
         timestamp: message.ts,
@@ -399,21 +400,21 @@ controller.hears(['hello', 'hi'], 'direct_message,direct_mention,mention', funct
         name: 'robot_face',
     }, function(err, res) {
         if (err) {
-            bot.botkit.log('Failed to add emoji reaction :(', err);
+            bot.botkit.log('Falla al agregar reacción con emoji :(', err);
         }
     });
 
 
     controller.storage.users.get(message.user, function(err, user) {
         if (user && user.name) {
-            bot.reply(message, 'Hello ' + user.name + '!!');
+            bot.reply(message, 'Hola ' + user.name + '!!');
         } else {
-            bot.reply(message, 'Hello.');
+            bot.reply(message, 'Hola.');
         }
     });
 });
 
-controller.hears(['call me (.*)', 'my name is (.*)'], 'direct_message,direct_mention,mention', function(bot, message) {
+controller.hears(['me llamo (.*)', 'yo soy (.*)', 'dime (.*)', 'mi nombre es (.*)'], 'direct_message,direct_mention,mention', function(bot, message) {
     var name = message.match[1];
     controller.storage.users.get(message.user, function(err, user) {
         if (!user) {
@@ -423,24 +424,24 @@ controller.hears(['call me (.*)', 'my name is (.*)'], 'direct_message,direct_men
         }
         user.name = name;
         controller.storage.users.save(user, function(err, id) {
-            bot.reply(message, 'Got it. I will call you ' + user.name + ' from now on.');
+            bot.reply(message, 'Lo tengo. Te llamaré ' + user.name + ' desde ahora.');
         });
     });
 });
 
-controller.hears(['what is my name', 'who am i'], 'direct_message,direct_mention,mention', function(bot, message) {
+controller.hears([/^(qui[eé]n soy|c[óo]mo me llamo|d[íi] mi nombre)/i], 'direct_message,direct_mention,mention', function(bot, message) {
 
     controller.storage.users.get(message.user, function(err, user) {
         if (user && user.name) {
-            bot.reply(message, 'Your name is ' + user.name);
+            bot.reply(message, 'Tu nombre es ' + user.name);
         } else {
             bot.startConversation(message, function(err, convo) {
                 if (!err) {
-                    convo.say('I do not know your name yet!');
-                    convo.ask('What should I call you?', function(response, convo) {
-                        convo.ask('You want me to call you `' + response.text + '`?', [
+                    convo.say('Aún no sé tu nombre!');
+                    convo.ask('Cómo debería llamarte?', function(response, convo) {
+                        convo.ask('Quieres que te llame `' + response.text + '`?', [
                             {
-                                pattern: 'yes',
+                                pattern: new RegExp(/^(si|sí|sip|s|claro|va|yes|ok|y|yeah)/i),
                                 callback: function(response, convo) {
                                     // since no further messages are queued after this,
                                     // the conversation will end naturally with status == 'completed'
@@ -448,7 +449,7 @@ controller.hears(['what is my name', 'who am i'], 'direct_message,direct_mention
                                 }
                             },
                             {
-                                pattern: 'no',
+                                pattern: new RegExp(/^(no|nel|nah|nop|nope|n)/i),
                                 callback: function(response, convo) {
                                     // stop the conversation. this will cause it to end with status == 'stopped'
                                     convo.stop();
@@ -469,7 +470,7 @@ controller.hears(['what is my name', 'who am i'], 'direct_message,direct_mention
 
                     convo.on('end', function(convo) {
                         if (convo.status == 'completed') {
-                            bot.reply(message, 'OK! I will update my dossier...');
+                            bot.reply(message, 'OK! Actualizaré mis registros...');
 
                             controller.storage.users.get(message.user, function(err, user) {
                                 if (!user) {
@@ -479,7 +480,7 @@ controller.hears(['what is my name', 'who am i'], 'direct_message,direct_mention
                                 }
                                 user.name = convo.extractResponse('nickname');
                                 controller.storage.users.save(user, function(err, id) {
-                                    bot.reply(message, 'Got it. I will call you ' + user.name + ' from now on.');
+                                    bot.reply(message, 'Lo tengo. Te llamaré ' + user.name + ' desde ahora.');
                                 });
                             });
 
@@ -487,7 +488,7 @@ controller.hears(['what is my name', 'who am i'], 'direct_message,direct_mention
 
                         } else {
                             // this happens if the conversation ended prematurely for some reason
-                            bot.reply(message, 'OK, nevermind!');
+                            bot.reply(message, 'OK, no importa!');
                         }
                     });
                 }
@@ -499,7 +500,7 @@ controller.hears(['what is my name', 'who am i'], 'direct_message,direct_mention
 ///^[a-zA-Z\u00C0-\u017F]+,\s[a-zA-Z\u00C0-\u017F]+$/
 
 //controller.hears(['shutdown','apagar','apagate','adios','ciao'], 'direct_message,direct_mention,mention', function(bot, message) {
-controller.hears([/^(shutdown|apagar|apagate|apágate|adios|adiós|ciao|bye|hasta la vista)/i], 
+controller.hears([/^(shutdown|apagar|ap[aá]gate|adi[oó]s|ciao|bye|hasta la vista)/i], 
     'direct_message,direct_mention,mention', function(bot, message) {
 
     bot.startConversation(message, function(err, convo) {
