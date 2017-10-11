@@ -23,6 +23,11 @@ controller.spawn({
   }
 });
 
+/************    Utterances   ************/
+
+var spanishUtterances_yes = "(s[ií]|sip|claro|va|yes|ok|yeah)";
+var spanishUtterances_no = "(no|nel|nah|nop|nope|ni maiz)";
+
 /************    Comienzan instrucciones para infra de Tribunal ************/
 
 /************    Ceph Fenix ************/
@@ -508,7 +513,7 @@ controller.hears([/^(shutdown|apagar|ap[aá]gate|adi[oó]s|ciao|bye|hasta la vis
         convo.ask('Estás seguro que quieres apagarme?', [
             {
                 //pattern: bot.utterances.yes,
-                pattern: new RegExp(/^(si|sí|sip|s|claro|va|yes|ok|y|yeah)/i),
+                pattern: spanishUtterances_yes,
                 callback: function(response, convo) {
                     convo.say('Bye!');
                     convo.next();
@@ -519,7 +524,7 @@ controller.hears([/^(shutdown|apagar|ap[aá]gate|adi[oó]s|ciao|bye|hasta la vis
             },
         {
             //pattern: bot.utterances.no,
-            pattern: new RegExp(/^(no|nel|nah|nop|nope|n)/i),
+            pattern: spanishUtterances_no,
             default: true,
             callback: function(response, convo) {
                 convo.say('*Phew!*');
@@ -530,20 +535,6 @@ controller.hears([/^(shutdown|apagar|ap[aá]gate|adi[oó]s|ciao|bye|hasta la vis
     });
 });
 
-
-/*
-controller.hears(['identify yourself', 'who are you', 'what is your name'],
-    'direct_message,direct_mention,mention', function(bot, message) {
-
-        var hostname = os.hostname();
-        var uptime = formatUptime(process.uptime());
-        
-        bot.reply(message,
-            ':robot_face: I am a bot named <@' + bot.identity.name +
-             '>. I have been running for ' + uptime + ' on ' + hostname + '.');
-
-    });
-*/
 
 controller.hears(['uptime', 'identificate', 'quien eres', 'cual es tu nombre'],
     'direct_message,direct_mention,mention', function(bot, message) {
@@ -561,11 +552,11 @@ function formatUptime(uptime) {
     var unit = 'segundo';
     if (uptime > 60) {
         uptime = uptime / 60;
-        unit = 'minutos';
+        unit = 'minuto';
     }
     if (uptime > 60) {
         uptime = uptime / 60;
-        unit = 'horas';
+        unit = 'hora';
     }
     if (uptime != 1) {
         unit = unit + 's';
