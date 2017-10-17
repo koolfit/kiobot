@@ -25,8 +25,10 @@ controller.spawn({
 
 /************    Utterances   ************/
 
-var spanishUtterances_yes = "(s[ií]|sip|claro|va|yes|ok|yeah)";
-var spanishUtterances_no = "(no|nel|nah|nop|nope|ni maiz)";
+var spanishUtterances_si = "(s[ií]|sip|claro|va|yes|ok|yeah|por favor)";
+var spanishUtterances_no = "(no|nel|nah|nop|nope|ni maiz|nelson|)";
+var spanishUtterances_hola = "(hola|hello|hi|ola|al[oó]|qu[eé] onda|qu[eé] pas[óo]|saludos|c[oó]mo est[aá]s)";
+var spanishUtterances_utilidad = "(no s[eé]|qu[eé] haces|puedes|qu[eé] puedes hacer|sirves|haces|hacer|funciona|funcionas|habilidad|habilidades|mu[ée]strame|lista|ayuda|ay[úu]dame|h[eé]chame la mano)";
 
 /************    Comienzan instrucciones para infra de Tribunal ************/
 
@@ -182,7 +184,7 @@ controller.hears(['jordan graficas', 'jordan gráficas'], 'direct_message,direct
 
 /************    Instrucciones para Menu de ayuda ************/
 
-controller.hears(['help', 'ayuda'], 'direct_message,direct_mention,mention', function(bot, message) {
+controller.hears(['help'], 'direct_message,direct_mention,mention', function(bot, message) {
     bot.api.users.info({user: message.user}, (error, response) => {
         let {name, real_name} = response.user;
 		var help = 'Hola @'+name+', estos son los comandos que puedo recibir:\n\n';
@@ -226,7 +228,7 @@ controller.hears(['infraestructura', 'infraestructuras', 'Infraestructura', 'Inf
 
 
 /***********  Saludos ***********/
-controller.hears(['Hola','hola'], 'ambient', function(bot, message) {
+/*controller.hears(['Hola','hola'], 'ambient', function(bot, message) {
     var hi_messages = ['hola',
                        'buen día',
                        'cómo estás?',
@@ -234,7 +236,7 @@ controller.hears(['Hola','hola'], 'ambient', function(bot, message) {
                        'Hola'];
     var randMessage = hi_messages[Math.floor(Math.random() * hi_messages.length)];
     bot.reply(message, randMessage);
-});
+});*/
 
 /***********  Fecha ***********/
 
@@ -397,28 +399,6 @@ controller.hears('screenshot (.*)', 'direct_message,direct_mention,mention', fun
 
 /*********** BOT TALK ***********/
 
-controller.hears(['hello', 'hi', 'hola'], 'direct_message,direct_mention,mention', function(bot, message) {
-
-    bot.api.reactions.add({
-        timestamp: message.ts,
-        channel: message.channel,
-        name: 'robot_face',
-    }, function(err, res) {
-        if (err) {
-            bot.botkit.log('Falla al agregar reacción con emoji :(', err);
-        }
-    });
-
-
-    controller.storage.users.get(message.user, function(err, user) {
-        if (user && user.name) {
-            bot.reply(message, 'Hola ' + user.name + '!!');
-        } else {
-            bot.reply(message, 'Hola.');
-        }
-    });
-});
-
 controller.hears(['me llamo (.*)', 'yo soy (.*)', 'dime (.*)', 'mi nombre es (.*)'], 'direct_message,direct_mention,mention', function(bot, message) {
     var name = message.match[1];
     controller.storage.users.get(message.user, function(err, user) {
@@ -513,7 +493,7 @@ controller.hears([/^(shutdown|apagar|ap[aá]gate|adi[oó]s|ciao|bye|hasta la vis
         convo.ask('Estás seguro que quieres apagarme?', [
             {
                 //pattern: bot.utterances.yes,
-                pattern: spanishUtterances_yes,
+                pattern: spanishUtterances_si,
                 callback: function(response, convo) {
                     convo.say('Bye!');
                     convo.next();
@@ -567,7 +547,160 @@ function formatUptime(uptime) {
     return uptime;
 }
 
+/***********************************************/
+/******************** HOLA *********************/
 
+controller.hears([spanishUtterances_hola,spanishUtterances_utilidad], 'direct_message,direct_mention,mention,ambient', function(bot, message) {
+
+    bot.api.reactions.add({
+        timestamp: message.ts,
+        channel: message.channel,
+        name: 'robot_face',
+    }, function(err, res) {
+        if (err) {
+            bot.botkit.log('Falla al agregar reacción con emoji :(', err);
+        }
+    });
+
+        controller.storage.users.get(message.user, function(err, user) {
+            //var spanishUtterances_combined = spanishUtterances_utilidad + spanishUtterances_si;
+            bot.startConversation(message, function(err, convo) {
+              if (!err) {
+                if (user && user.name) {
+                    convo.say('Hola ' + user.name + ', ¿Cómo estás?');
+                } else {
+                    convo.say('Hola, ¿Cómo estás?');
+                }  
+                    convo.ask('Soy *@' +bot.identity.name + '* ¿Puedo ayudarte en algo hoy?', [
+                    {
+
+                        pattern: spanishUtterances_si,
+                        //default: true,
+                        callback: function(response, convo) {
+                            convo.say('A continuación te muestro una lista de lo que puedo ayudarte');
+                            convo.say('```1. Reportes de Capacidad\n2. Protocolo de Incidencias GobMX```');
+                                /*
+                                bot.startConversation(message, function(err, convo) {
+                                    if (!err) {
+                                        convo.say('Selecciona una opción (spanishUtterances_no = cancelar)'[
+                                                    {
+                                                      pattern: '1',
+                                                      callback: function(response, convo) {
+                                                        convo.say('Seleccionaste la opción `1`');
+                                                        convo.next();
+                                                      }
+                                                    },
+                                                    {
+                                                      pattern: '2',
+                                                      callback: function(response, convo) {
+                                                        convo.say('Seleccionaste la opción `2`');
+                                                        convo.next();
+                                                      }
+                                                    },
+                                                    {
+                                                      pattern: spanishUtterances_no,
+                                                      callback: function(response, convo) {
+                                                        convo.stop();
+                                                      }
+                                                    }
+                                                    
+                                                    {
+                                                      default: true,
+                                                      callback: function(response, convo) {
+                                                          convo.repeat();
+                                                          convo.next();
+                                                      }
+                                                    }
+                                                    
+                                        ]);
+                                    }
+                                });
+                                */
+
+                            convo.next();
+
+                        }
+                    },
+                    {
+                                pattern: spanishUtterances_no,
+                                callback: function(response, convo) {
+                                    // stop the conversation. this will cause it to end with status == 'stopped'
+                                    convo.stop();
+                                }
+                    }
+
+                    ]);
+
+                        convo.next();
+
+                    convo.on('end', function(convo) {
+                        if (convo.status == 'completed') {
+                            //bot.reply(message, '...');
+                        } else {
+                            // this happens if the conversation ended prematurely for some reason
+                            bot.reply(message, ':rodadora:');
+                        }
+                    });
+              }
+            });
+        });
+});
+       
+/*
+controller.hears([spanishUtterances_hola], 'direct_message,direct_mention,mention', function(bot, message) {
+
+    bot.api.reactions.add({
+        timestamp: message.ts,
+        channel: message.channel,
+        name: 'robot_face',
+    }, function(err, res) {
+        if (err) {
+            bot.botkit.log('Falla al agregar reacción con emoji :(', err);
+        }
+    });
+
+
+    controller.storage.users.get(message.user, function(err, user) {
+        if (user && user.name) {
+            bot.reply(message, 'Hola ' + user.name + '!!');
+        } else {
+            bot.reply(message, 'Hola.');
+        }
+    });
+}); 
+*/
+        
+/*
+controller.hears([/^(shutdown|apagar|ap[aá]gate|adi[oó]s|ciao|bye|hasta la vista)/i], 
+    'direct_message,direct_mention,mention', function(bot, message) {
+
+    bot.startConversation(message, function(err, convo) {
+
+        convo.ask('Estás seguro que quieres apagarme?', [
+            {
+                //pattern: bot.utterances.yes,
+                pattern: spanishUtterances_si,
+                callback: function(response, convo) {
+                    convo.say('Bye!');
+                    convo.next();
+                    setTimeout(function() {
+                        process.exit();
+                    }, 3000);
+                }
+            },
+        {
+            //pattern: bot.utterances.no,
+            pattern: spanishUtterances_no,
+            default: true,
+            callback: function(response, convo) {
+                convo.say('*Phew!*');
+                convo.next();
+            }
+        }
+        ]);
+    });
+});
+*/
 
 
 //FUNCIÓN PARA QUITAR ACENTOS DE UN STRING
